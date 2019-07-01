@@ -7,4 +7,4 @@ A simple web parsing script to find prices of items you want, and notify you whe
 * Clothing Sites
 * E-mails upon dropped price
 * Continuous online deployment
-* Compilation flags to remove input within script
+* ~~Compilation flags to remove input within script~~

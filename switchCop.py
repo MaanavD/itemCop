@@ -1,16 +1,20 @@
 import requests
+import argparse
 from bs4 import BeautifulSoup
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-z', '--zipcode', default='98008')
+parser.add_argument('-d', '--distance', default='10')
+parser.add_argument('-p', '--platform', default='craigslist')
+
+args = parser.parse_args()
+
 
 URL = 'https://seattle.craigslist.org/search/sss?query=nintendo+switch&sort=date&search_distance=5.2&postal=98008'
 headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'}
 
-postCode = input("Enter your Postal Code: ")
-distance = input("Enter the max distance you're willing to travel: ")
-
-if not(postCode == ''):
-    URL = URL.replace('98008', str(postCode))
-if not(distance == ''):
-    URL = URL.replace('5.2', str(distance))
+URL = URL.replace('98008', args.zipcode)
+URL = URL.replace('5.2', args.distance)
 
 page = requests.get(URL, headers=headers)
 
@@ -27,7 +31,7 @@ for hit in soup.findAll(attrs={'class' : 'result-title'}):
 
 for obj in price:
     counter+=1
-    if (counter%2 == 0):
+    if (counter%2 == 1):
         finalPrices.append(str(obj).strip("<span class=\"result-price\">").strip("</"))
 
 print("\nThe prices for your query currently are: \n")
